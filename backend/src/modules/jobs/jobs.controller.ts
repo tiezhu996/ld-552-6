@@ -7,9 +7,9 @@ export class JobsController {
   constructor(private jobs: JobsService) {}
   @Get() findAll(@Query() q: any, @Req() req: any) { return this.jobs.findAll(q, req.user); }
   @Post() @Roles(UserRole.HR, UserRole.HIRING_MANAGER, UserRole.ADMIN) create(@Body() body: any) { return this.jobs.create(body); }
-  @Get(':id') findOne(@Param('id') id: string) { return this.jobs.findOne(+id); }
+  @Get(':id') findOne(@Param('id') id: string, @Req() req: any) { return this.jobs.findOne(+id, req.user); }
   @Patch(':id') @Roles(UserRole.HR, UserRole.HIRING_MANAGER, UserRole.ADMIN) update(@Param('id') id: string, @Body() body: any) { return this.jobs.update(+id, body); }
   @Patch(':id/status') @Roles(UserRole.HR, UserRole.HIRING_MANAGER, UserRole.ADMIN) status(@Param('id') id: string, @Body() body: { status: JobStatus; reason?: string }) { return this.jobs.updateStatus(+id, body.status, body.reason); }
-  @Get(':id/resumes') resumes(@Param('id') id: string) { return this.jobs.resumes(+id); }
-  @Get(':id/interviews') interviews(@Param('id') id: string) { return this.jobs.interviews(+id); }
+  @Get(':id/resumes') resumes(@Param('id') id: string, @Req() req: any) { return this.jobs.resumes(+id, req.user); }
+  @Get(':id/interviews') interviews(@Param('id') id: string, @Req() req: any) { return this.jobs.interviews(+id, req.user); }
 }
