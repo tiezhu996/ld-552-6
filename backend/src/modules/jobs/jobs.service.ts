@@ -15,7 +15,7 @@ export class JobsService {
   constructor(private prisma: PrismaService) {}
   async findAll(query: any, user: any) {
     const where: any = { status: query.status, department: query.department };
-    if (user.role === UserRole.HIRING_MANAGER && query.department) where.department = user.department;
+    if (user.role === UserRole.HIRING_MANAGER) where.department = user.department;
     return this.prisma.job.findMany({ where, include: { hiringManager: { select: publicUserSelect }, _count: { select: { resumes: true, offers: true } } }, orderBy: { updatedAt: 'desc' } });
   }
   findOne(id: number) { return this.prisma.job.findUnique({ where: { id }, include: { hiringManager: { select: publicUserSelect }, resumes: { include: { candidate: true, interviews: true } }, offers: true } }); }

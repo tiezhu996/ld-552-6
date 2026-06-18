@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { PrismaService } from '../../prisma/prisma.service';
 import { publicUserSelect } from '../../prisma/selects';
 import { OfferStatus } from '../../constants/enums';
-const flow: Record<OfferStatus, OfferStatus[]> = { DRAFT: ['APPROVED'] as OfferStatus[], APPROVED: ['REJECTED'] as OfferStatus[], SENT: ['ACCEPTED', 'REJECTED', 'WITHDRAWN'] as OfferStatus[], ACCEPTED: [], REJECTED: [], WITHDRAWN: [] };
+const flow: Record<OfferStatus, OfferStatus[]> = { DRAFT: ['APPROVED'] as OfferStatus[], APPROVED: ['SENT', 'REJECTED'] as OfferStatus[], SENT: ['ACCEPTED', 'REJECTED', 'WITHDRAWN'] as OfferStatus[], ACCEPTED: [], REJECTED: [], WITHDRAWN: [] };
 @Injectable()
 export class OffersService {
   constructor(private prisma: PrismaService) {}

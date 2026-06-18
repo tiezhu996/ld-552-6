@@ -15,7 +15,7 @@ export class InterviewsService {
   }
   async create(data: any) {
     const interview = await this.prisma.interview.create({ data: { ...data, scheduledAt: new Date(data.scheduledAt), result: InterviewResult.PENDING }, include: { resume: true } });
-    await this.prisma.resume.update({ where: { id: data.resumeId }, data: { status: ResumeStatus.SHORTLISTED } });
+    await this.prisma.resume.update({ where: { id: data.resumeId }, data: { status: ResumeStatus.INTERVIEWING } });
     return interview;
   }
   async update(id: number, data: any) {
